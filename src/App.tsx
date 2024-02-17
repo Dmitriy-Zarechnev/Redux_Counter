@@ -86,7 +86,6 @@ function App() {
     function onChangeInputMaxCount(value: number) {
         setMaxCount(value)
     }
-
     function onChangeInputMinCount(value: number) {
         setMinCount(value)
     }
