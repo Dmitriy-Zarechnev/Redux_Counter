@@ -11,7 +11,7 @@ type SetCounterPropsType = {
     onChangeInputMaxCount: (value: number) => void
     onChangeInputMinCount: (value: number) => void
     onFocusInputChange: () => void
-    setValuesIntoLocal: () => void
+    // setValuesIntoLocal: () => void
     error: ErrorType
     }
 
@@ -26,7 +26,7 @@ export const SetCounter = (props: SetCounterPropsType) => {
                        onChange={props.onChangeInputMaxCount}
                        error={props.error.maxValueError}
                        onFocusInputChange={props.onFocusInputChange}
-                       setValuesIntoLocal={props.setValuesIntoLocal}
+                       // setValuesIntoLocal={props.setValuesIntoLocal}
                 />
 
                 <Input title={'start value'}
@@ -34,14 +34,14 @@ export const SetCounter = (props: SetCounterPropsType) => {
                        onChange={props.onChangeInputMinCount}
                        error={props.error.minValueError}
                        onFocusInputChange={props.onFocusInputChange}
-                       setValuesIntoLocal={props.setValuesIntoLocal}
+                       // setValuesIntoLocal={props.setValuesIntoLocal}
                 />
             </span>
 
             <div className={S.counter__btn_box}>
                 <Button name={'SET'}
                         disabled={!props.onInputFocus || isCounterError}
-                        onClick={props.setValuesIntoLocal}
+                        // onClick={props.setValuesIntoLocal}
                 />
             </div>
         </section>

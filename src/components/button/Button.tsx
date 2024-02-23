@@ -4,7 +4,7 @@ import S from './Button.module.css'
 type ButtonPropsType = {
     name: string
     disabled?: boolean
-    onClick: () => void
+    onClick?: () => void
 }
 
 const Button = (props: ButtonPropsType) => {

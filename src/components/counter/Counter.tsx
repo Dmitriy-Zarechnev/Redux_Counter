@@ -13,7 +13,7 @@ type CounterPropsType = {
     error: ErrorType
 }
 
-const Counter = (props: CounterPropsType) => {
+export const Counter = (props: CounterPropsType) => {
 
     const isCounterError = Object.values(props.error).some(error => error);
 
@@ -48,4 +48,3 @@ const Counter = (props: CounterPropsType) => {
     )
 }
 
-export default Counter
