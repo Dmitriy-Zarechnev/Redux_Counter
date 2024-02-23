@@ -7,7 +7,7 @@ type ButtonPropsType = {
     onClick?: () => void
 }
 
-const Button = (props: ButtonPropsType) => {
+export const Button = (props: ButtonPropsType) => {
     return (
         <button
             disabled={props.disabled}
@@ -18,4 +18,3 @@ const Button = (props: ButtonPropsType) => {
     )
 }
 
-export default Button

@@ -1,7 +1,8 @@
 import React from 'react'
-import Button from '../button/Button'
+import {Button} from '../button/Button'
 import S from './Counter.module.css'
-import {ErrorType} from '../../App'
+import {ErrorType} from '../../state/counter-reducer'
+
 
 type CounterPropsType = {
     counter: number
@@ -15,7 +16,7 @@ type CounterPropsType = {
 
 export const Counter = (props: CounterPropsType) => {
 
-    const isCounterError = Object.values(props.error).some(error => error);
+    const isCounterError = Object.values(props.error).some(error => error)
 
     const textStyles = `${S.counter__display} 
                                ${props.onInputFocus && S.onInputFocus}

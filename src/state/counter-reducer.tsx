@@ -1,16 +1,23 @@
 // Типизация
 type CounterReducerActionsType =
     IncrementCounterAT |
+    SetCounterAT |
     ResetCounterAT |
     ChangeMaxCountAT |
     ChangeMinCountAT |
-    InputFocusChangeAT
+    SetInputFocusTrueAT |
+    SetInputFocusFalseAT |
+    ValueErrorChangeAT
 
 type IncrementCounterAT = ReturnType<typeof incrementCounterAC>
+type SetCounterAT = ReturnType<typeof setCounterAC>
 type ResetCounterAT = ReturnType<typeof resetCounterAC>
 type ChangeMaxCountAT = ReturnType<typeof changeMaxCountAC>
 type ChangeMinCountAT = ReturnType<typeof changeMinCountAC>
-type InputFocusChangeAT = ReturnType<typeof inputFocusChangeAC>
+type SetInputFocusTrueAT = ReturnType<typeof setInputFocusTrueAC>
+type SetInputFocusFalseAT = ReturnType<typeof setInputFocusFalseAC>
+type ValueErrorChangeAT = ReturnType<typeof valueErrorChangeAC>
+
 
 export type CounterReducerStateType = {
     maxCount: number,
@@ -18,13 +25,15 @@ export type CounterReducerStateType = {
     counterStep: number,
     counter: number,
     onInputFocus: boolean,
-    error: {
-        maxValueError: boolean,
-        minValueError: boolean
-    }
+    error: ErrorType
 }
 
-// *********** Первоначальный стэйт для usersReducer ****************
+export type ErrorType = {
+    maxValueError: boolean
+    minValueError: boolean
+}
+
+// *********** Первоначальный стэйт для counterReducer ****************
 const initialState: CounterReducerStateType = {
     maxCount: 5,
     minCount: 0,
@@ -44,6 +53,13 @@ export const counterReducer = (state: CounterReducerStateType = initialState, ac
             return {
                 ...state,
                 counter: state.counter + state.counterStep
+            }
+        }
+
+        case 'SET-COUNTER': {
+            return {
+                ...state,
+                counter: action.payload.value
             }
         }
 
@@ -68,10 +84,28 @@ export const counterReducer = (state: CounterReducerStateType = initialState, ac
             }
         }
 
-        case 'INPUT-FOCUS-CHANGE': {
+        case 'SET-INPUT-FOCUS-TRUE': {
             return {
                 ...state,
                 onInputFocus: true
+            }
+        }
+
+        case 'SET-INPUT-FOCUS-FALSE': {
+            return {
+                ...state,
+                onInputFocus: false
+            }
+        }
+
+        case 'VALUE-ERROR-CHANGE': {
+            return {
+                ...state,
+                error: {
+                    ...state.error,
+                    maxValueError: state.maxCount < 0 || state.maxCount - state.minCount <= 0,
+                    minValueError: state.minCount < 0 || state.maxCount - state.minCount <= 0 || state.minCount < 0
+                }
             }
         }
 
@@ -87,13 +121,19 @@ export const incrementCounterAC = () => {
         type: 'INCREMENT-COUNTER'
     } as const
 }
-
+export const setCounterAC = (value: number) => {
+    return {
+        type: 'SET-COUNTER',
+        payload: {
+            value
+        }
+    } as const
+}
 export const resetCounterAC = () => {
     return {
         type: 'RESET-COUNTER'
     } as const
 }
-
 export const changeMaxCountAC = (value: number) => {
     return {
         type: 'CHANGE-MAX-COUNT',
@@ -102,7 +142,6 @@ export const changeMaxCountAC = (value: number) => {
         }
     } as const
 }
-
 export const changeMinCountAC = (value: number) => {
     return {
         type: 'CHANGE-MIN-COUNT',
@@ -111,11 +150,37 @@ export const changeMinCountAC = (value: number) => {
         }
     } as const
 }
-
-export const inputFocusChangeAC = () => {
+export const setInputFocusTrueAC = () => {
     return {
-        type: 'INPUT-FOCUS-CHANGE'
+        type: 'SET-INPUT-FOCUS-TRUE'
+    } as const
+}
+export const setInputFocusFalseAC = () => {
+    return {
+        type: 'SET-INPUT-FOCUS-FALSE'
+    } as const
+}
+export const valueErrorChangeAC = () => {
+    return {
+        type: 'VALUE-ERROR-CHANGE'
     } as const
 }
 
-// *********** Thunk - санки необходимые для общения с DAL ****************
+
+// *********** Thunk - санки необходимые для общения с localStorage ****************
+
+// функция для сохранения объектов в память браузера
+
+export function setToLocalStorage<T>(key: string, state: T) {
+    const stateAsString = JSON.stringify(state)
+    localStorage.setItem(key, stateAsString)
+}
+
+// и вот вам функция для получения сохранённого объекта в памяти браузера:
+export function getFromLocalStorage<T>(key: string, defaultState: T) {
+    let state = defaultState
+    const stateAsString = localStorage.getItem(key)
+    if (stateAsString !== null) state = JSON.parse(stateAsString) as T
+    return state
+}
+
