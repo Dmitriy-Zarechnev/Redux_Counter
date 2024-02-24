@@ -14,7 +14,7 @@ type CounterPropsType = {
     error: ErrorType
 }
 
-export const Counter = (props: CounterPropsType) => {
+export const Counter = React.memo((props: CounterPropsType) => {
 
     const isCounterError = Object.values(props.error).some(error => error)
 
@@ -47,5 +47,5 @@ export const Counter = (props: CounterPropsType) => {
             </div>
         </section>
     )
-}
+})
 

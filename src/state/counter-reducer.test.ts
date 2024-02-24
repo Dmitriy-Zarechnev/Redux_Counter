@@ -112,11 +112,51 @@ test('maxValueError should be true', () => {
 })
 
 
+test('maxValueError should be true v2', () => {
+
+    startState = {
+        maxCount: 2,
+        minCount: 2,
+        counterStep: 2,
+        counter: 0,
+        onInputFocus: false,
+        error: {
+            maxValueError: false,
+            minValueError: false
+        }
+    }
+
+    const newState = counterReducer(startState, valueErrorChangeAC())
+
+    expect(newState.error.maxValueError).toBe(true)
+})
+
+
 test('minValueError should be true', () => {
 
     startState = {
         maxCount: 5,
         minCount: -1,
+        counterStep: 2,
+        counter: 0,
+        onInputFocus: false,
+        error: {
+            maxValueError: false,
+            minValueError: false
+        }
+    }
+
+    const newState = counterReducer(startState, valueErrorChangeAC())
+
+    expect(newState.error.minValueError).toBe(true)
+})
+
+
+test('minValueError should be true v2', () => {
+
+    startState = {
+        maxCount: 1,
+        minCount: 2,
         counterStep: 2,
         counter: 0,
         onInputFocus: false,

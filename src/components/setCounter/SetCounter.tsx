@@ -16,7 +16,7 @@ type SetCounterPropsType = {
     error: ErrorType
 }
 
-export const SetCounter = (props: SetCounterPropsType) => {
+export const SetCounter = React.memo((props: SetCounterPropsType) => {
     const isCounterError = Object.values(props.error).some(error => error)
 
     return (
@@ -47,5 +47,5 @@ export const SetCounter = (props: SetCounterPropsType) => {
             </div>
         </section>
     )
-}
+})
 

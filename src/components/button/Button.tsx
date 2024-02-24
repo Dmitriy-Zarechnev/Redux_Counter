@@ -7,7 +7,7 @@ type ButtonPropsType = {
     onClick?: () => void
 }
 
-export const Button = (props: ButtonPropsType) => {
+export const Button = React.memo((props: ButtonPropsType) => {
     return (
         <button
             disabled={props.disabled}
@@ -16,5 +16,5 @@ export const Button = (props: ButtonPropsType) => {
         >{props.name}
         </button>
     )
-}
+})
 

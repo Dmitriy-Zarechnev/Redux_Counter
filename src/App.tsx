@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import S from './App.module.css'
 import {Counter} from './components/counter/Counter'
 import {SetCounter} from './components/setCounter/SetCounter'
@@ -44,34 +44,36 @@ function App() {
     }, [count.maxCount, count.minCount])
 
 
-    function setValuesIntoLocal() {
+    const setValuesIntoLocal = useCallback(() => {
         dispatch(resetCounterAC())
         dispatch(setInputFocusFalseAC())
-    }
+    }, [])
+
 
     //  ------ Change and Set 'counter' value ------
-    function changeCounter() {
+    const changeCounter = useCallback(() => {
         count.counter <= count.maxCount && dispatch(incrementCounterAC())
-    }
+    }, [count.counter, count.maxCount])
 
-    function resetCounter() {
+    const resetCounter = useCallback(() => {
         dispatch(resetCounterAC())
-    }
+    }, [])
 
 
     //  ------  Set input 'value' ------
-    function onChangeInputMaxCount(value: number) {
+    const onChangeInputMaxCount = useCallback((value: number) => {
         dispatch(changeMaxCountAC(value))
-    }
+    }, [])
 
-    function onChangeInputMinCount(value: number) {
+    const onChangeInputMinCount = useCallback((value: number) => {
         dispatch(changeMinCountAC(value))
-    }
+    }, [])
+
 
     //  ------  Set OnInputFocus ------
-    function onFocusInputChange() {
+    const onFocusInputChange = useCallback(() => {
         dispatch(setInputFocusTrueAC())
-    }
+    }, [])
 
 
     return (

@@ -104,7 +104,7 @@ export const counterReducer = (state: CounterReducerStateType = initialState, ac
                 error: {
                     ...state.error,
                     maxValueError: state.maxCount < 0 || state.maxCount - state.minCount <= 0,
-                    minValueError: state.minCount < 0 || state.maxCount - state.minCount <= 0 || state.minCount < 0
+                    minValueError: state.minCount < 0 || state.maxCount - state.minCount <= 0
                 }
             }
         }
@@ -170,7 +170,6 @@ export const valueErrorChangeAC = () => {
 // *********** Thunk - санки необходимые для общения с localStorage ****************
 
 // функция для сохранения объектов в память браузера
-
 export function setToLocalStorage<T>(key: string, state: T) {
     const stateAsString = JSON.stringify(state)
     localStorage.setItem(key, stateAsString)
