@@ -1,23 +1,13 @@
 // Типизация
 type CounterReducerActionsType =
-    IncrementCounterAT |
-    SetCounterAT |
-    ResetCounterAT |
-    ChangeMaxCountAT |
-    ChangeMinCountAT |
-    SetInputFocusTrueAT |
-    SetInputFocusFalseAT |
-    ValueErrorChangeAT
-
-type IncrementCounterAT = ReturnType<typeof incrementCounterAC>
-type SetCounterAT = ReturnType<typeof setCounterAC>
-type ResetCounterAT = ReturnType<typeof resetCounterAC>
-type ChangeMaxCountAT = ReturnType<typeof changeMaxCountAC>
-type ChangeMinCountAT = ReturnType<typeof changeMinCountAC>
-type SetInputFocusTrueAT = ReturnType<typeof setInputFocusTrueAC>
-type SetInputFocusFalseAT = ReturnType<typeof setInputFocusFalseAC>
-type ValueErrorChangeAT = ReturnType<typeof valueErrorChangeAC>
-
+    ReturnType<typeof incrementCounterAC> |
+    ReturnType<typeof setCounterAC> |
+    ReturnType<typeof resetCounterAC> |
+    ReturnType<typeof changeMaxCountAC> |
+    ReturnType<typeof changeMinCountAC> |
+    ReturnType<typeof setInputFocusTrueAC> |
+    ReturnType<typeof setInputFocusFalseAC> |
+    ReturnType<typeof valueErrorChangeAC>
 
 export type CounterReducerStateType = {
     maxCount: number,
@@ -47,7 +37,7 @@ const initialState: CounterReducerStateType = {
 }
 
 // *********** Reducer - редьюсер, чистая функция для изменения стэйта после получения экшена от диспача ****************
-export const counterReducer = (state: CounterReducerStateType = initialState, action: CounterReducerActionsType): CounterReducerStateType => {
+export const counterReducer = (state = initialState, action: CounterReducerActionsType): CounterReducerStateType => {
     switch (action.type) {
         case 'INCREMENT-COUNTER': {
             return {
