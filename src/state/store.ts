@@ -1,7 +1,6 @@
-import {applyMiddleware, combineReducers, createStore, legacy_createStore} from 'redux'
+import {combineReducers, legacy_createStore} from 'redux'
 import {counterReducer} from './counter-reducer'
-import {thunk} from 'redux-thunk'
-import {loadState} from '../utils/localstorage-utils'
+import {loadState, saveState} from '../utils/localstorage-utils'
 
 
 const rootReducer = combineReducers({
@@ -9,18 +8,15 @@ const rootReducer = combineReducers({
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
+// loadState - загружает данные из localStorage
+// applyMiddleware(thunk) - промежуточный слой для thunk
 
+export const store = legacy_createStore(rootReducer, loadState())
 
-/*
-let preloadState
-const persistedState = localStorage.getItem('app-state')
-if (persistedState) {
-    preloadState = JSON.parse(persistedState)
-}*/
-
-export const store = legacy_createStore(rootReducer, loadState(), applyMiddleware(thunk))
-
+// Подписались на изменение store, и записываем в localStorage значения
 store.subscribe(() => {
-    localStorage.setItem('app-state', JSON.stringify(store.getState()))
+    saveState({
+        count: store.getState().count
+    })
 })
 

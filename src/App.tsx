@@ -3,45 +3,24 @@ import S from './App.module.css'
 import {Counter} from './components/counter/Counter'
 import {SetCounter} from './components/setCounter/SetCounter'
 import {useDispatch, useSelector} from 'react-redux'
-import {changeMaxCountAC, changeMinCountAC, getFromLocalStorage, incrementCounterAC, resetCounterAC, setCounterAC, setInputFocusFalseAC, setInputFocusTrueAC, setToLocalStorage, valueErrorChangeAC} from './state/counter-reducer'
+import {changeMaxCountAC, changeMinCountAC, incrementCounterAC, resetCounterAC, setInputFocusFalseAC, setInputFocusTrueAC, valueErrorChangeAC} from './state/counter-reducer'
 import {counterSelector} from './state/counter-selector'
 
 
 function App() {
 
-    //  ----- Keys for LocalStorage -----------
-    const COUNTER_VALUE = 'counterValue'
-    const MAX_COUNTER_VALUE = 'maxCounterValue'
-    const MIN_COUNTER_VALUE = 'minCounterValue'
-
     // Связь с Redux
     const count = useSelector(counterSelector)
-
     const dispatch = useDispatch()
 
 
-    //  ------ Get 'counter values' from localStorage ------
-    // useEffect(() => {
-    //     dispatch(setCounterAC(getFromLocalStorage<number>(COUNTER_VALUE, count.counter)))
-    //     dispatch(changeMaxCountAC(getFromLocalStorage<number>(MAX_COUNTER_VALUE, count.maxCount)))
-    //     dispatch(changeMinCountAC(getFromLocalStorage<number>(MIN_COUNTER_VALUE, count.minCount)))
-    // }, [])
+    //  ------  Error's handler ------
 
-
-    //  ------  Set 'counter values' into localStorage ------
-    // useEffect(() => {
-    //     setToLocalStorage<number>(COUNTER_VALUE, count.counter)
-    // }, [count.counter])
-    //
     useEffect(() => {
-    //     setToLocalStorage<number>(MAX_COUNTER_VALUE, count.maxCount)
-    //     setToLocalStorage<number>(MIN_COUNTER_VALUE, count.minCount)
-    //
-    dispatch(valueErrorChangeAC())
-    //
+        dispatch(valueErrorChangeAC())
     }, [count.maxCount, count.minCount])
 
-
+    // ------  Reset and change focus after save ------
     const setValuesIntoLocal = useCallback(() => {
         dispatch(resetCounterAC())
         dispatch(setInputFocusFalseAC())
