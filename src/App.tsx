@@ -3,8 +3,8 @@ import S from './App.module.css'
 import {Counter} from './components/counter/Counter'
 import {SetCounter} from './components/setCounter/SetCounter'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from './state/store'
-import {changeMaxCountAC, changeMinCountAC, CounterReducerStateType, getFromLocalStorage, incrementCounterAC, resetCounterAC, setCounterAC, setInputFocusFalseAC, setInputFocusTrueAC, setToLocalStorage, valueErrorChangeAC} from './state/counter-reducer'
+import {changeMaxCountAC, changeMinCountAC, getFromLocalStorage, incrementCounterAC, resetCounterAC, setCounterAC, setInputFocusFalseAC, setInputFocusTrueAC, setToLocalStorage, valueErrorChangeAC} from './state/counter-reducer'
+import {counterSelector} from './state/counter-selector'
 
 
 function App() {
@@ -15,32 +15,30 @@ function App() {
     const MIN_COUNTER_VALUE = 'minCounterValue'
 
     // Связь с Redux
-    const count =
-        useSelector<AppRootStateType, CounterReducerStateType>
-        (state => state.count)
+    const count = useSelector(counterSelector)
 
     const dispatch = useDispatch()
 
 
     //  ------ Get 'counter values' from localStorage ------
-    useEffect(() => {
-        dispatch(setCounterAC(getFromLocalStorage<number>(COUNTER_VALUE, count.counter)))
-        dispatch(changeMaxCountAC(getFromLocalStorage<number>(MAX_COUNTER_VALUE, count.maxCount)))
-        dispatch(changeMinCountAC(getFromLocalStorage<number>(MIN_COUNTER_VALUE, count.minCount)))
-    }, [])
+    // useEffect(() => {
+    //     dispatch(setCounterAC(getFromLocalStorage<number>(COUNTER_VALUE, count.counter)))
+    //     dispatch(changeMaxCountAC(getFromLocalStorage<number>(MAX_COUNTER_VALUE, count.maxCount)))
+    //     dispatch(changeMinCountAC(getFromLocalStorage<number>(MIN_COUNTER_VALUE, count.minCount)))
+    // }, [])
 
 
     //  ------  Set 'counter values' into localStorage ------
+    // useEffect(() => {
+    //     setToLocalStorage<number>(COUNTER_VALUE, count.counter)
+    // }, [count.counter])
+    //
     useEffect(() => {
-        setToLocalStorage<number>(COUNTER_VALUE, count.counter)
-    }, [count.counter])
-
-    useEffect(() => {
-        setToLocalStorage<number>(MAX_COUNTER_VALUE, count.maxCount)
-        setToLocalStorage<number>(MIN_COUNTER_VALUE, count.minCount)
-
-        dispatch(valueErrorChangeAC())
-
+    //     setToLocalStorage<number>(MAX_COUNTER_VALUE, count.maxCount)
+    //     setToLocalStorage<number>(MIN_COUNTER_VALUE, count.minCount)
+    //
+    dispatch(valueErrorChangeAC())
+    //
     }, [count.maxCount, count.minCount])
 
 

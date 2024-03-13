@@ -1,5 +1,5 @@
 // Типизация
-type CounterReducerActionsType =
+export type CounterReducerActionsType =
     ReturnType<typeof incrementCounterAC> |
     ReturnType<typeof setCounterAC> |
     ReturnType<typeof resetCounterAC> |
