@@ -20,6 +20,7 @@ function App() {
         dispatch(valueErrorChangeAC())
     }, [count.maxCount, count.minCount])
 
+
     // ------  Reset and change focus after save ------
     const setValuesIntoLocal = useCallback(() => {
         dispatch(resetCounterAC())
